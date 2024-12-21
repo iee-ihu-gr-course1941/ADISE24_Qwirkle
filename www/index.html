@@ -1,0 +1,220 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>ΑΔΙΣΕ: Qwirkle</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="bootstrap/bootstrap.min.css" rel="stylesheet">
+	<link href="css/myqwirkle.css" rel="stylesheet">
+	<script src="bootstrap/jquery-3.2.1.min.js"></script>
+    <script src="bootstrap/bootstrap.min.js"></script>
+	<script src="js/qwirkle.js"></script>
+    <script src="jquery-ui-1.12.1/jquery-ui.min.js"></script>
+	<link href="jquery-ui-1.12.1/jquery-ui.min.css" rel="stylesheet">
+  </head>
+<body>
+<h1>Qwirkle</h1>
+<div id='qwirkle_board'>
+</div>
+
+<br/>
+<div id='game_initializer'>
+<input id='username'> 
+<select id='pcolor'>
+<option value='R'>R</option>
+<option value='B'>B</option>
+</select>
+<button id='qwirkle_login' class='btn btn-primary'>ΕΙΣΟΔΟΣ ΣΤΟ ΠΑΙΧΝΙΔΙ</button><br>
+</div>
+
+<div id='game_info'>
+</div>
+
+<div id='move_div'>
+    Δώσε κίνηση (X Y): <input id='the_move'>
+    
+        <select id='piece'>
+        <option value='1' id='1'>1</option>
+        <option value='2' id='2'>2</option>
+        <option value='3' id='3'>3</option>
+        <option value='4' id='4'>4</option>
+        <option value='5' id='5'>5</option>
+        </select>
+
+        <button id='do_move' class='btn btn-primary' onclick="Replace()">ΚΑΝΕ ΤΗΝ ΚΙΝΗΣΗ</button><br>
+
+        <button id='change_pieces' class='btn btn-primary' onclick="FillOption()">ΑΛΛΑΞΕ ΠΙΟΝΙΑ</button><br>
+
+<script>
+    function CallRandomNumber(){
+        x = Math.floor((Math.random()* 35) + 0);
+        if(x == 0)return "B_4";
+        if(x == 1)return "B_8";
+        if(x == 2)return "B_C";
+        if(x == 3)return "B_CL";
+        if(x == 4)return "B_D";
+        if(x == 5)return "B_S";
+
+        if(x == 6)return "G_4";
+        if(x == 7)return "G_8";
+        if(x == 8)return "G_C";
+        if(x == 9)return "G_CL";
+        if(x == 10)return "G_D";
+        if(x == 11)return "G_S";
+
+        if(x == 12)return "O_4";
+        if(x == 13)return "O_8";
+        if(x == 14)return "O_C";
+        if(x == 15)return "O_CL";
+        if(x == 16)return "O_D";
+        if(x == 17)return "O_S";
+
+        if(x == 18)return "P_4";
+        if(x == 19)return "P_8";
+        if(x == 20)return "P_C";
+        if(x == 21)return "P_CL";
+        if(x == 22)return "P_D";
+        if(x == 23)return "P_S";
+
+        if(x == 24)return "R_4";
+        if(x == 25)return "R_8";
+        if(x == 26)return "R_C";
+        if(x == 27)return "R_CL";
+        if(x == 28)return "R_D";
+        if(x == 29)return "R_S";
+
+        if(x == 30)return "Y_4";
+        if(x == 31)return "Y_8";
+        if(x == 32)return "Y_C";
+        if(x == 33)return "Y_CL";
+        if(x == 34)return "Y_D";
+        if(x == 35)return "Y_S";
+    }
+
+    function FillOption(){
+        document.getElementById('1').className = CallRandomNumber();
+        document.getElementById('2').className = CallRandomNumber();
+        document.getElementById('3').className = CallRandomNumber();
+        document.getElementById('4').className = CallRandomNumber();
+        document.getElementById('5').className = CallRandomNumber();
+        
+        for(let i = 1; i <= 5; i++){
+        if(document.getElementById(i).className == "B_4") document.getElementById(i).textContent = "Blue 4pt Star";
+        if(document.getElementById(i).className == "B_8") document.getElementById(i).textContent = "Blue 8pt Star";
+        if(document.getElementById(i).className == "B_C") document.getElementById(i).textContent = "Blue Circle";
+        if(document.getElementById(i).className == "B_CL") document.getElementById(i).textContent = "Blue Clover";
+        if(document.getElementById(i).className == "B_D") document.getElementById(i).textContent = "Blue Diamond";
+        if(document.getElementById(i).className == "B_S") document.getElementById(i).textContent = "Blue Square";
+
+        if(document.getElementById(i).className == "G_4") document.getElementById(i).textContent = "Green 4pt Star";
+        if(document.getElementById(i).className == "G_8") document.getElementById(i).textContent = "Green 8pt Star";
+        if(document.getElementById(i).className == "G_C") document.getElementById(i).textContent = "Green Circle";
+        if(document.getElementById(i).className == "G_CL") document.getElementById(i).textContent = "Green Clover";
+        if(document.getElementById(i).className == "G_D") document.getElementById(i).textContent = "Green Diamond";
+        if(document.getElementById(i).className == "G_S") document.getElementById(i).textContent = "Green Square";
+
+        if(document.getElementById(i).className == "O_4") document.getElementById(i).textContent = "Orange 4pt Star";
+        if(document.getElementById(i).className == "O_8") document.getElementById(i).textContent = "Orange 8pt Star";
+        if(document.getElementById(i).className == "O_C") document.getElementById(i).textContent = "Orange Circle";
+        if(document.getElementById(i).className == "O_CL") document.getElementById(i).textContent = "Orange Clover";
+        if(document.getElementById(i).className == "O_D") document.getElementById(i).textContent = "Orange Diamond";
+        if(document.getElementById(i).className == "O_S") document.getElementById(i).textContent = "Orange Square";
+
+        if(document.getElementById(i).className == "P_4") document.getElementById(i).textContent = "Purple 4pt Star";
+        if(document.getElementById(i).className == "P_8") document.getElementById(i).textContent = "Purple 8pt Star";
+        if(document.getElementById(i).className == "P_C") document.getElementById(i).textContent = "Purple Circle";
+        if(document.getElementById(i).className == "P_CL") document.getElementById(i).textContent = "Purple Clover";
+        if(document.getElementById(i).className == "P_D") document.getElementById(i).textContent = "Purple Diamond";
+        if(document.getElementById(i).className == "P_S") document.getElementById(i).textContent = "Purple Square";
+
+        if(document.getElementById(i).className == "R_4") document.getElementById(i).textContent = "Red 4pt Star";
+        if(document.getElementById(i).className == "R_8") document.getElementById(i).textContent = "Red 8pt Star";
+        if(document.getElementById(i).className == "R_C") document.getElementById(i).textContent = "Red Circle";
+        if(document.getElementById(i).className == "R_CL") document.getElementById(i).textContent = "Red Clover";
+        if(document.getElementById(i).className == "R_D") document.getElementById(i).textContent = "Red Diamond";
+        if(document.getElementById(i).className == "R_S") document.getElementById(i).textContent = "Red Square";
+
+        if(document.getElementById(i).className == "Y_4") document.getElementById(i).textContent = "Yellow 4pt Star";
+        if(document.getElementById(i).className == "Y_8") document.getElementById(i).textContent = "Yellow 8pt Star";
+        if(document.getElementById(i).className == "Y_C") document.getElementById(i).textContent = "Yellow Circle";
+        if(document.getElementById(i).className == "Y_CL") document.getElementById(i).textContent = "Yellow Clover";
+        if(document.getElementById(i).className == "Y_D") document.getElementById(i).textContent = "Yellow Diamond";
+        if(document.getElementById(i).className == "Y_S") document.getElementById(i).textContent = "Yellow Square";
+
+        }
+    }
+
+    function Replace(){
+        setTimeout(ReplaceFunction, 10);
+    }
+
+    function ReplaceFunction(){
+            for(let i = 1; i <= 5; i++){
+            if(document.getElementById(i).innerHTML == $("#piece").find("option:selected").text())document.getElementById(i).className = CallRandomNumber();
+
+            if(document.getElementById(i).className == "B_4") document.getElementById(i).textContent = "Blue 4pt Star";
+        if(document.getElementById(i).className == "B_8") document.getElementById(i).textContent = "Blue 8pt Star";
+        if(document.getElementById(i).className == "B_C") document.getElementById(i).textContent = "Blue Circle";
+        if(document.getElementById(i).className == "B_CL") document.getElementById(i).textContent = "Blue Clover";
+        if(document.getElementById(i).className == "B_D") document.getElementById(i).textContent = "Blue Diamond";
+        if(document.getElementById(i).className == "B_S") document.getElementById(i).textContent = "Blue Square";
+
+        if(document.getElementById(i).className == "G_4") document.getElementById(i).textContent = "Green 4pt Star";
+        if(document.getElementById(i).className == "G_8") document.getElementById(i).textContent = "Green 8pt Star";
+        if(document.getElementById(i).className == "G_C") document.getElementById(i).textContent = "Green Circle";
+        if(document.getElementById(i).className == "G_CL") document.getElementById(i).textContent = "Green Clover";
+        if(document.getElementById(i).className == "G_D") document.getElementById(i).textContent = "Green Diamond";
+        if(document.getElementById(i).className == "G_S") document.getElementById(i).textContent = "Green Square";
+
+        if(document.getElementById(i).className == "O_4") document.getElementById(i).textContent = "Orange 4pt Star";
+        if(document.getElementById(i).className == "O_8") document.getElementById(i).textContent = "Orange 8pt Star";
+        if(document.getElementById(i).className == "O_C") document.getElementById(i).textContent = "Orange Circle";
+        if(document.getElementById(i).className == "O_CL") document.getElementById(i).textContent = "Orange Clover";
+        if(document.getElementById(i).className == "O_D") document.getElementById(i).textContent = "Orange Diamond";
+        if(document.getElementById(i).className == "O_S") document.getElementById(i).textContent = "Orange Square";
+
+        if(document.getElementById(i).className == "P_4") document.getElementById(i).textContent = "Purple 4pt Star";
+        if(document.getElementById(i).className == "P_8") document.getElementById(i).textContent = "Purple 8pt Star";
+        if(document.getElementById(i).className == "P_C") document.getElementById(i).textContent = "Purple Circle";
+        if(document.getElementById(i).className == "P_CL") document.getElementById(i).textContent = "Purple Clover";
+        if(document.getElementById(i).className == "P_D") document.getElementById(i).textContent = "Purple Diamond";
+        if(document.getElementById(i).className == "P_S") document.getElementById(i).textContent = "Purple Square";
+
+        if(document.getElementById(i).className == "R_4") document.getElementById(i).textContent = "Red 4pt Star";
+        if(document.getElementById(i).className == "R_8") document.getElementById(i).textContent = "Red 8pt Star";
+        if(document.getElementById(i).className == "R_C") document.getElementById(i).textContent = "Red Circle";
+        if(document.getElementById(i).className == "R_CL") document.getElementById(i).textContent = "Red Clover";
+        if(document.getElementById(i).className == "R_D") document.getElementById(i).textContent = "Red Diamond";
+        if(document.getElementById(i).className == "R_S") document.getElementById(i).textContent = "Red Square";
+
+        if(document.getElementById(i).className == "Y_4") document.getElementById(i).textContent = "Yellow 4pt Star";
+        if(document.getElementById(i).className == "Y_8") document.getElementById(i).textContent = "Yellow 8pt Star";
+        if(document.getElementById(i).className == "Y_C") document.getElementById(i).textContent = "Yellow Circle";
+        if(document.getElementById(i).className == "Y_CL") document.getElementById(i).textContent = "Yellow Clover";
+        if(document.getElementById(i).className == "Y_D") document.getElementById(i).textContent = "Yellow Diamond";
+        if(document.getElementById(i).className == "Y_S") document.getElementById(i).textContent = "Yellow Square";
+        }
+    }
+    window.onload = FillOption();
+
+    </script>
+
+<br><br>
+<!--
+Δώσε κίνηση (x1 y1): <input id='the_move_src'> (x2 y2):
+<select id='the_move_dest'></select>
+<button id='do_move2' class='btn btn-primary'>ΚΑΝΕ ΤΗΝ ΚΙΝΗΣΗ 2</button><br>
+</div>
+//-->
+<br/><br/>
+
+
+<button id='qwirkle_reset' class='btn btn-primary'>ΕΝΑΡΞΗ/RESET</button><br>
+
+
+</body>
+</html>
