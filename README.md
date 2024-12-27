@@ -1,7 +1,7 @@
 # Demo Page
 
 Μπορείτε να κατεβάσετε τοπικά ή να επισκευτείτε την σελίδα: 
-users.it.teithe.gr/~iee2019135/www/index.html
+https://users.it.teithe.gr/~iee2019135/www/index.html
 
 
 
